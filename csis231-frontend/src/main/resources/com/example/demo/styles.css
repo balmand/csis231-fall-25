@@ -1,8 +1,6 @@
-/* Professional Customer Management System Styles */
-
 /* Root styling */
 .root {
-    -fx-background-color: #f8f9fa;
+    -fx-background-color: #f8f9fa; /* lighter neutral for app background */
     -fx-font-family: "Segoe UI", "Arial", sans-serif;
 }
 
@@ -11,6 +9,9 @@
     -fx-background-color: #ffffff;
     -fx-border-color: #e9ecef;
     -fx-border-width: 0 0 1 0;
+    -fx-padding: 10 18 10 18;
+    -fx-alignment: center-left;
+    -fx-effect: dropshadow(gaussian, rgba(15,23,42,0.02), 6, 0, 0, 1);
 }
 
 .title-label {
@@ -20,14 +21,29 @@
     -fx-padding: 0 0 5 0;
 }
 
-.section-label {
+/* Provide a slightly smaller title for header usage */
+.header-section .title-label {
     -fx-font-size: 20px;
+    -fx-text-fill: #0f172a;
+}
+
+/* Secondary/section label */
+.section-label {
+    -fx-font-size: 16px;
     -fx-font-weight: 600;
     -fx-text-fill: #495057;
     -fx-padding: 0 0 10 0;
 }
 
-/* Button Styles */
+/* Brand icon (used inside sidebar) */
+.brand-icon {
+    -fx-font-size: 22px;
+    -fx-padding: 0 6 0 0;
+}
+
+/* =========================
+   Button Styles (primary/secondary/danger)
+   ========================= */
 .primary-button {
     -fx-background-color: #007bff;
     -fx-text-fill: white;
@@ -80,7 +96,9 @@
     -fx-effect: dropshadow(gaussian, rgba(220,53,69,0.3), 8, 0, 0, 2);
 }
 
-/* Form Styles */
+/* =========================
+   Form Styles
+   ========================= */
 .form-title {
     -fx-font-size: 20px;
     -fx-font-weight: bold;
@@ -110,7 +128,9 @@
     -fx-effect: dropshadow(gaussian, rgba(0,123,255,0.2), 4, 0, 0, 0);
 }
 
-/* Table View Styles */
+/* =========================
+   Table View Styles (customer-table, etc.)
+   ========================= */
 .customer-table {
     -fx-background-color: #ffffff;
     -fx-border-color: #dee2e6;
@@ -163,7 +183,7 @@
     -fx-alignment: CENTER;
 }
 
-/* Scrollbar Styling */
+
 .scroll-bar:vertical {
     -fx-background-color: #f1f3f4;
     -fx-border-color: transparent;
@@ -183,7 +203,9 @@
     -fx-background-color: transparent;
 }
 
-/* Alert Dialog Styling */
+/* =========================
+   Alert Dialog Styling
+   ========================= */
 .alert {
     -fx-background-color: #ffffff;
     -fx-border-color: #dee2e6;
@@ -203,15 +225,12 @@
     -fx-text-fill: #495057;
 }
 
-/* Button Bar Styling */
 .button-bar {
     -fx-background-color: #f8f9fa;
     -fx-border-color: #dee2e6;
     -fx-border-width: 1 0 0 0;
     -fx-padding: 15 20 15 20;
 }
-
-/* General Improvements */
 .label {
     -fx-text-fill: #495057;
 }
@@ -224,3 +243,133 @@
 .button:focused {
     -fx-effect: dropshadow(gaussian, rgba(0,123,255,0.4), 8, 0, 0, 0);
 }
+
+/* small nav button styling used by main.fxml */
+.nav-button {
+    -fx-background-color: transparent;
+    -fx-text-fill: #334155;
+    -fx-font-size: 14px;
+    -fx-alignment: CENTER_LEFT;
+    -fx-padding: 8 12 8 12;
+    -fx-background-radius: 6px;
+    -fx-border-radius: 6px;
+    -fx-cursor: hand;
+    -fx-graphic-text-gap: 10;
+}
+
+/* hover and focus for nav */
+.nav-button:hover { -fx-background-color: #eef2ff; }
+.nav-button:focused { -fx-effect: dropshadow(gaussian, rgba(0,123,255,0.12), 10, 0, 0, 1); }
+
+/* active state for nav buttons */
+.nav-button.active {
+    -fx-background-color: #e6f0ff;
+    -fx-font-weight: 700;
+    -fx-text-fill: #0b63d6;
+    -fx-effect: dropshadow(gaussian, rgba(11,99,214,0.12), 10, 0, 0, 1);
+}
+
+/* Logout button variation */
+.logout-button {
+    -fx-text-fill: #b91c1c;
+    -fx-font-weight: 600;
+}
+
+.logout-button:hover {
+    -fx-background-color: rgba(185,28,28,0.08);
+}
+
+/* Sidebar style (complements your root/header) */
+.sidebar {
+    -fx-background-color: white;
+    -fx-effect: dropshadow(gaussian, rgba(0,0,0,0.04), 8, 0, 0, 2);
+    -fx-pref-width: 190;
+    -fx-background-radius: 8;
+    -fx-padding: 14;
+}
+
+/* Slightly wider sidebar alternative used in the merged main.css */
+.sidebar.wide {
+    -fx-pref-width: 220;
+}
+
+/* Content area - white card feel */
+.content-area {
+    -fx-padding: 20;
+    -fx-background-color: transparent;
+}
+
+/* Muted and small utilities */
+.muted {
+    -fx-text-fill: #94a3b8; /* light muted grey */
+}
+.small {
+    -fx-font-size: 11px;
+}
+
+/* Footer styles */
+.footer {
+    -fx-background-color: transparent;
+    -fx-border-color: #e9ecef;
+    -fx-border-width: 1 0 0 0; /* top border only */
+    -fx-alignment: center-left;
+    -fx-padding: 10 18 10 18;
+    -fx-spacing: 8;
+}
+
+.footer-left, .footer-right {
+    -fx-alignment: center-left;
+}
+
+.footer .label {
+    -fx-font-size: 12px;
+    -fx-text-fill: #6b7280;
+}
+
+/* Slight contrast for the content "card" you may use inside content area */
+.card {
+    -fx-background-color: white;
+    -fx-background-radius: 8;
+    -fx-padding: 16;
+    -fx-effect: dropshadow(gaussian, rgba(15,23,42,0.05), 10, 0, 0, 3);
+}
+
+/* Optional: responsive tweak to shrink sidebar on small windows */
+@media screen and (max-width: 900px) {
+    .sidebar { -fx-pref-width: 140; }
+}
+
+/* center helper */
+.center-box {
+    -fx-alignment: center;
+    -fx-padding: 12;
+}
+
+/* small badge */
+.badge {
+    -fx-background-color: #e6f0ff;
+    -fx-text-fill: #0b63d6;
+    -fx-padding: 4 8 4 8;
+    -fx-background-radius: 6;
+    -fx-font-size: 12px;
+    -fx-font-weight: 600;
+}
+
+/* subtle divider utility */
+.divider {
+    -fx-background-color: #e9ecef;
+    -fx-pref-height: 1;
+    -fx-max-height: 1;
+}
+
+/* tiny utility for right aligned controls */
+.align-right {
+    -fx-alignment: center-right;
+}
+
+/* small link style */
+.link {
+    -fx-text-fill: #0b63d6;
+    -fx-underline: true;
+}
+
