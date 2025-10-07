@@ -1,6 +1,7 @@
 package com.csis231.api.book;
 
 import jakarta.validation.Valid;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.web.bind.annotation.*;
 
@@ -10,37 +11,35 @@ import java.util.List;
 @RequestMapping("/api/books")
 public class BookController {
     private final BookRepository repo;
+
+    @Autowired
+    BookService bookService;
     public BookController(BookRepository repo) { this.repo = repo; }
 
     @GetMapping
     public List<Book> all() {
-        return repo.findAll();
+        return bookService.getAll();
     }
 
     @PostMapping
     @ResponseStatus(HttpStatus.CREATED)
     public Book create(@Valid @RequestBody Book c) {
-        return repo.save(c);
+        return bookService.create(c);
     }
 
     @GetMapping("/{id}")
     public Book get(@PathVariable Long id) {
-        return repo.findById(id).orElseThrow(() -> new RuntimeException("Customer not found"));
+        return bookService.getById(id);
     }
 
     @PutMapping("/{id}")
     public Book update(@PathVariable Long id, @Valid @RequestBody Book book) {
-        Book existing = repo.findById(id).orElseThrow(() -> new RuntimeException("Book not found"));
-        existing.setAuthor(book.getAuthor());
-        existing.setPrice(book.getPrice());
-        existing.setTitle(book.getTitle());
-        existing.setISBN(book.getISBN());
-        return repo.save(existing);
+        return bookService.update(id, book);
     }
 
     @DeleteMapping("/{id}")
     @ResponseStatus(HttpStatus.NO_CONTENT)
     public void delete(@PathVariable Long id) {
-        repo.deleteById(id);
+        bookService.delete(id);
     }
 }
