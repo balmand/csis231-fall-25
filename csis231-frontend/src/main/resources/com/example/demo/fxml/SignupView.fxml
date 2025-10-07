@@ -1,0 +1,23 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.geometry.Insets?>
+<?import javafx.scene.control.*?>
+<?import javafx.scene.layout.*?>
+
+<AnchorPane xmlns:fx="http://javafx.com/fxml" fx:controller="com.example.demo.SignupController">
+    <VBox spacing="15" alignment="CENTER" AnchorPane.topAnchor="50" AnchorPane.leftAnchor="50"
+          AnchorPane.rightAnchor="50">
+        <Label text="Customer Sign Up" style="-fx-font-size: 20px; -fx-font-weight: bold;"/>
+
+        <TextField fx:id="nameField" promptText="Enter your name" />
+        <TextField fx:id="emailField" promptText="Enter your email" />
+
+        <Button fx:id="signupButton" text="Sign Up" onAction="#handleSignup"
+                style="-fx-background-color: #4CAF50; -fx-text-fill: white;"/>
+
+        <Button fx:id="backButton" text="Back" onAction="#handleBack"
+                style="-fx-background-color: #808080; -fx-text-fill: white;"/>
+
+        <Label fx:id="statusLabel" textFill="red"/>
+    </VBox>
+</AnchorPane>

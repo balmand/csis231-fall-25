@@ -4,9 +4,11 @@ import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.fxml.Initializable;
 import javafx.scene.Node;
+import javafx.scene.Scene;
 import javafx.scene.control.Button;
 import javafx.scene.layout.StackPane;
 import javafx.scene.layout.VBox;
+import javafx.stage.Stage;
 
 import java.io.IOException;
 import java.net.URL;
@@ -28,6 +30,9 @@ public class MainController implements Initializable {
 
     @FXML
     private Button logoutButton;
+
+    @FXML
+    private Button signupButton;
 
     @Override
     public void initialize(URL location, ResourceBundle resources) {
@@ -79,7 +84,16 @@ public class MainController implements Initializable {
             // In production you might show a user-friendly dialog instead
         }
     }
-
+    @FXML
+    private void handleSignupButton() {
+        try {
+            FXMLLoader loader = new FXMLLoader(getClass().getResource("/com/example/demo/fxml/SignupView.fxml"));
+            Stage stage = (Stage) signupButton.getScene().getWindow();
+            stage.setScene(new Scene(loader.load()));
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+    }
     // set active nav button styling
     private void setActiveNav(Button active) {
         customersButton.getStyleClass().remove("active");

@@ -57,6 +57,7 @@
                         <Label text="🔒" />
                     </graphic>
                 </Button>
+                <Button fx:id="signupButton" text="Sign Up" onAction="#handleSignupButton" />
             </VBox>
         </VBox>
     </left>
