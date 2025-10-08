@@ -1,7 +1,6 @@
 package com.example.demo.api;
 
 import com.example.demo.model.Book;
-import com.example.demo.model.Customer;
 import com.fasterxml.jackson.core.type.TypeReference;
 import com.fasterxml.jackson.databind.ObjectMapper;
 
@@ -13,14 +12,13 @@ import java.net.http.HttpResponse;
 import java.util.List;
 import java.util.Properties;
 
-public class BackendClient {
+public class BookBackendClient {
 
     private final HttpClient http = HttpClient.newHttpClient();
-    private ObjectMapper mapper = new ObjectMapper();
-
+    private final ObjectMapper mapper = new ObjectMapper();
     private final String baseUrl;
 
-    public BackendClient(){
+    public BookBackendClient() {
         Properties props = new Properties();
         try {
             props.load(getClass().getResourceAsStream("/client.properties"));
@@ -30,55 +28,61 @@ public class BackendClient {
         }
     }
 
-    public List<Customer> fetchCustomers() throws IOException, InterruptedException {
+    // Fetch all books
+    public List<Book> fetchBooks() throws IOException, InterruptedException {
         HttpRequest req = HttpRequest.newBuilder()
-                .uri(URI.create(baseUrl + "/api/customers"))
+                .uri(URI.create(baseUrl + "/api/books"))
                 .GET()
                 .build();
-        HttpResponse<String> resp = http.send(req, HttpResponse.BodyHandlers.ofString());
 
-        return mapper.readValue(resp.body(), new TypeReference<>(){});
+        HttpResponse<String> resp = http.send(req, HttpResponse.BodyHandlers.ofString());
+        return mapper.readValue(resp.body(), new TypeReference<>() {});
     }
 
-    public Customer getCustomer(Long id) throws IOException, InterruptedException {
+    // Get book by ID
+    public Book getBook(Long id) throws IOException, InterruptedException {
         HttpRequest req = HttpRequest.newBuilder()
-                .uri(URI.create(baseUrl + "/api/customers/" + id))
+                .uri(URI.create(baseUrl + "/api/books/" + id))
                 .GET()
                 .build();
-        HttpResponse<String> resp = http.send(req, HttpResponse.BodyHandlers.ofString());
 
-        return mapper.readValue(resp.body(), Customer.class);
+        HttpResponse<String> resp = http.send(req, HttpResponse.BodyHandlers.ofString());
+        return mapper.readValue(resp.body(), Book.class);
     }
 
-    public Customer createCustomer(Customer customer) throws IOException, InterruptedException {
-        String json = mapper.writeValueAsString(customer);
+    // Create a new book
+    public Book createBook(Book book) throws IOException, InterruptedException {
+        String json = mapper.writeValueAsString(book);
         HttpRequest req = HttpRequest.newBuilder()
-                .uri(URI.create(baseUrl + "/api/customers"))
+                .uri(URI.create(baseUrl + "/api/books"))
                 .header("Content-Type", "application/json")
                 .POST(HttpRequest.BodyPublishers.ofString(json))
                 .build();
-        HttpResponse<String> resp = http.send(req, HttpResponse.BodyHandlers.ofString());
 
-        return mapper.readValue(resp.body(), Customer.class);
+        HttpResponse<String> resp = http.send(req, HttpResponse.BodyHandlers.ofString());
+        return mapper.readValue(resp.body(), Book.class);
     }
 
-    public Customer updateCustomer(Long id, Customer customer) throws IOException, InterruptedException {
-        String json = mapper.writeValueAsString(customer);
+    // Update an existing book
+    public Book updateBook(Long id, Book book) throws IOException, InterruptedException {
+        String json = mapper.writeValueAsString(book);
         HttpRequest req = HttpRequest.newBuilder()
-                .uri(URI.create(baseUrl + "/api/customers/" + id))
+                .uri(URI.create(baseUrl + "/api/books/" + id))
                 .header("Content-Type", "application/json")
                 .PUT(HttpRequest.BodyPublishers.ofString(json))
                 .build();
-        HttpResponse<String> resp = http.send(req, HttpResponse.BodyHandlers.ofString());
 
-        return mapper.readValue(resp.body(), Customer.class);
+        HttpResponse<String> resp = http.send(req, HttpResponse.BodyHandlers.ofString());
+        return mapper.readValue(resp.body(), Book.class);
     }
 
-    public void deleteCustomer(Long id) throws IOException, InterruptedException {
+    // Delete a book
+    public void deleteBook(Long id) throws IOException, InterruptedException {
         HttpRequest req = HttpRequest.newBuilder()
-                .uri(URI.create(baseUrl + "/api/customers/" + id))
+                .uri(URI.create(baseUrl + "/api/books/" + id))
                 .DELETE()
                 .build();
+
         HttpResponse<String> resp = http.send(req, HttpResponse.BodyHandlers.ofString());
 
         if (resp.statusCode() != 204) {
