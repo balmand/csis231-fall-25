@@ -60,7 +60,7 @@ public class MainController implements Initializable {
     // Load Book view
     @FXML
     private void showBooks() {
-        loadView("/com/example/demo/fxml/hello-book.fxml");
+        loadView("/com/example/demo/fxml/book-view.fxml");
         setActiveNav(booksButton);
     }
 
