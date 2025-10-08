@@ -12,6 +12,7 @@ import javafx.scene.control.Button;
 import javafx.scene.control.Label;
 import javafx.scene.control.TableView;
 import javafx.scene.control.TableColumn;
+import javafx.scene.control.TextField;
 import javafx.scene.control.cell.PropertyValueFactory;
 import javafx.stage.Stage;
 
@@ -21,43 +22,48 @@ public class HelloController {
     @FXML
     private Label welcomeText;
 
-    @FXML 
+    @FXML
     private TableView<Customer> customerTable;
-    
+
     @FXML
     private TableColumn<Customer, String> nameColumn;
-    
+
     @FXML
     private TableColumn<Customer, String> emailColumn;
-    
+
     @FXML
     private Button addButton;
-    
+
     @FXML
     private Button editButton;
-    
+
     @FXML
     private Button deleteButton;
-    
+
     @FXML
     private Button refreshButton;
+
+    @FXML
+    private TextField searchField;
 
     private final BackendClient api = new BackendClient();
     private final ObservableList<Customer> customers = FXCollections.observableArrayList();
 
     @FXML
-    public void initialize(){
+    public void initialize() {
         // Configure table columns with custom cell value factories
-        nameColumn.setCellValueFactory(cellData -> new javafx.beans.property.SimpleStringProperty(cellData.getValue().getName()));
-        emailColumn.setCellValueFactory(cellData -> new javafx.beans.property.SimpleStringProperty(cellData.getValue().getEmail()));
-        
+        nameColumn.setCellValueFactory(
+                cellData -> new javafx.beans.property.SimpleStringProperty(cellData.getValue().getName()));
+        emailColumn.setCellValueFactory(
+                cellData -> new javafx.beans.property.SimpleStringProperty(cellData.getValue().getEmail()));
+
         // Set table data
         customerTable.setItems(customers);
-        
+
         // Configure column sorting
         nameColumn.setSortable(true);
         emailColumn.setSortable(true);
-        
+
         reload();
     }
 
@@ -65,7 +71,7 @@ public class HelloController {
     protected void onAddCustomer() {
         showCustomerForm(null);
     }
-    
+
     @FXML
     protected void onEditCustomer() {
         Customer selected = customerTable.getSelectionModel().getSelectedItem();
@@ -75,7 +81,7 @@ public class HelloController {
         }
         showCustomerForm(selected);
     }
-    
+
     @FXML
     protected void onDeleteCustomer() {
         Customer selected = customerTable.getSelectionModel().getSelectedItem();
@@ -83,12 +89,12 @@ public class HelloController {
             new Alert(Alert.AlertType.WARNING, "Please select a customer to delete").showAndWait();
             return;
         }
-        
+
         Alert confirmAlert = new Alert(Alert.AlertType.CONFIRMATION);
         confirmAlert.setTitle("Confirm Delete");
         confirmAlert.setHeaderText("Delete Customer");
         confirmAlert.setContentText("Are you sure you want to delete " + selected.getName() + "?");
-        
+
         if (confirmAlert.showAndWait().orElse(null) == javafx.scene.control.ButtonType.OK) {
             try {
                 api.deleteCustomer(selected.getId());
@@ -98,7 +104,7 @@ public class HelloController {
             }
         }
     }
-    
+
     @FXML
     protected void onRefresh() {
         reload();
@@ -109,11 +115,11 @@ public class HelloController {
             FXMLLoader loader = new FXMLLoader(getClass().getResource("/com/example/demo/fxml/customer-form.fxml"));
             Scene scene = new Scene(loader.load(), 400, 300);
             scene.getStylesheets().add(getClass().getResource("styles.css").toExternalForm());
-            
+
             CustomerFormController controller = loader.getController();
             controller.setCustomer(customer);
             controller.setOnCustomerSaved(this::reload);
-            
+
             Stage stage = new Stage();
             stage.setTitle(customer == null ? "Add Customer" : "Edit Customer");
             stage.setResizable(false);
@@ -124,12 +130,34 @@ public class HelloController {
         }
     }
 
-    private void reload(){
+    private void reload() {
         customers.clear();
-        try{
+        try {
             customers.addAll(api.fetchCustomers());
-        }catch(Exception e){
-            new Alert(Alert.AlertType.ERROR, "Failed to load customers "+e.getMessage()).showAndWait();
+        } catch (Exception e) {
+            new Alert(Alert.AlertType.ERROR, "Failed to load customers " + e.getMessage()).showAndWait();
         }
+    }
+
+    @FXML
+    protected void onSearch() {
+        String query = searchField.getText().trim();
+        if (query.isEmpty()) {
+            reload();
+            return;
+        }
+
+        customers.clear();
+        try {
+            customers.addAll(api.searchCustomers(query));
+        } catch (Exception e) {
+            new Alert(Alert.AlertType.ERROR, "Failed to search customers: " + e.getMessage()).showAndWait();
+        }
+    }
+
+    @FXML
+    protected void onClearSearch() {
+        searchField.clear();
+        reload();
     }
 }

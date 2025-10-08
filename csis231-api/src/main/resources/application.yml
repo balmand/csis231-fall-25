@@ -1,14 +1,17 @@
 server:
-  port: 8080
+  port: 8081
 
 spring:
   datasource:
-    url: jdbc:postgresql://localhost:5432/csis_231_db
+    url: jdbc:postgresql://localhost:3001/csis231_bookstore
     username: postgres
-    password: postgres
+    password: elise
   jpa:
     hibernate:
-      ddl-auto: update   # for dev; use validate in prod
+      ddl-auto: update
     show-sql: true
     properties:
       hibernate.format_sql: true
+  sql:
+    init:
+      mode: always

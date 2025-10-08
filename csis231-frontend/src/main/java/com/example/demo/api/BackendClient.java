@@ -20,7 +20,7 @@ public class BackendClient {
 
     private final String baseUrl;
 
-    public BackendClient(){
+    public BackendClient() {
         Properties props = new Properties();
         try {
             props.load(getClass().getResourceAsStream("/client.properties"));
@@ -37,7 +37,19 @@ public class BackendClient {
                 .build();
         HttpResponse<String> resp = http.send(req, HttpResponse.BodyHandlers.ofString());
 
-        return mapper.readValue(resp.body(), new TypeReference<>(){});
+        return mapper.readValue(resp.body(), new TypeReference<>() {
+        });
+    }
+
+    public List<Customer> searchCustomers(String query) throws IOException, InterruptedException {
+        HttpRequest req = HttpRequest.newBuilder()
+                .uri(URI.create(baseUrl + "/api/customers/search?query=" + query))
+                .GET()
+                .build();
+        HttpResponse<String> resp = http.send(req, HttpResponse.BodyHandlers.ofString());
+
+        return mapper.readValue(resp.body(), new TypeReference<>() {
+        });
     }
 
     public Customer getCustomer(Long id) throws IOException, InterruptedException {

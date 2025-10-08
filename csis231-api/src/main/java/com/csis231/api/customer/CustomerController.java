@@ -14,11 +14,18 @@ public class CustomerController {
     @Autowired
     CustomerService customerService;
 
-    public CustomerController(CustomerRepository repo) { this.repo = repo; }
+    public CustomerController(CustomerRepository repo) {
+        this.repo = repo;
+    }
 
     @GetMapping
     public List<Customer> all() {
         return customerService.findAll();
+    }
+
+    @GetMapping("/search")
+    public List<Customer> search(@RequestParam String query) {
+        return customerService.search(query);
     }
 
     @PostMapping
