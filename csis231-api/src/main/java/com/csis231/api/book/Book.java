@@ -7,7 +7,8 @@ import jakarta.validation.constraints.NotBlank;
 import java.util.Date;
 
 @Entity
-public class Book {
+public class
+Book {
     @Id @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
