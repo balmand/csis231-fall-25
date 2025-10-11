@@ -3,9 +3,9 @@ server:
 
 spring:
   datasource:
-    url: jdbc:postgresql://localhost:3001/csis231_bookstore
+    url: jdbc:postgresql://localhost:5433/csis_231_db
     username: postgres
-    password: elise
+    password: root
   jpa:
     hibernate:
       ddl-auto: update
