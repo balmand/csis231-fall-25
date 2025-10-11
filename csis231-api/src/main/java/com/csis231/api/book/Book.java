@@ -7,8 +7,7 @@ import jakarta.validation.constraints.NotBlank;
 import java.util.Date;
 
 @Entity
-public class
-Book {
+public class Book {
     @Id @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
@@ -18,13 +17,15 @@ Book {
     @NotBlank
     private String author;
 
+    @Column(name = "`year`")
     private int year;
     private double price;
     private String ISBN;
 
-    public Book() {}
-    public Book(String title, String author, int year, String ISBN)
-    {
+    public Book() {
+    }
+
+    public Book(String title, String author, int year, String ISBN) {
         this.title = title;
         this.author = author;
         this.year = year;
